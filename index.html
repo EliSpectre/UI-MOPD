@@ -10,7 +10,11 @@
 <body>
     <!-- Header -->
     <header class="hero">
-        <div class="container">
+        <div class="container hero-content">
+            <div class="hero-side hero-left">
+                <img src="static/images/Uni-GUI.png" alt="Uni-GUI">
+            </div>
+            <div class="hero-center">
             <h1 class="title">
                 <span class="highlight-orange">UI-MOPD</span>: Multi-platform On-Policy Distillation for Continual GUI Agent Learning
             </h1>
@@ -21,7 +25,7 @@
                 <span>Chengzhen Duan<sup>2</sup></span>,
                 <span>Fazhan Liu<sup>2</sup></span>,
                 <span>Hui Liu<sup>2</sup></span>,
-                <span>Pei Fu<sup>2</sup></span>,
+                <span>Pei Fu<sup>2</sup></span>,<br>
                 <span>Jian Luan<sup>2</sup></span>,
                 <span>Yaowei Wang<sup>3,5</sup></span>,
                 <span>Shu-Tao Xia<sup>1,5</sup></span>,
@@ -29,13 +33,11 @@
             </div>
             <div class="author-notes">
                 <p>* Equal contribution &nbsp;&nbsp; &dagger; Corresponding author</p>
+                <p><a href="mailto:220110904@stu.hit.edu.cn" style="color:var(--orange);">220110904@stu.hit.edu.cn</a> (Niu Lian), <a href="mailto:wangjp26@gmail.com" style="color:var(--orange);">wangjp26@gmail.com</a> (Jinpeng Wang)</p>
             </div>
             <div class="affiliations">
-                <p><sup>1</sup> Tsinghua Shenzhen International Graduate School, Tsinghua University</p>
-                <p><sup>2</sup> Xiaomi</p>
-                <p><sup>3</sup> Harbin Institute of Technology, Shenzhen</p>
-                <p><sup>4</sup> Zhejiang University</p>
-                <p><sup>5</sup> Peng Cheng Laboratory</p>
+                <p><sup>1</sup>Tsinghua Shenzhen International Graduate School, Tsinghua University, <sup>2</sup>Xiaomi</p>
+                <p><sup>3</sup>Harbin Institute of Technology, Shenzhen, <sup>4</sup>Zhejiang University, <sup>5</sup>Peng Cheng Laboratory</p>
             </div>
             <div class="logos">
                 <img src="static/images/Tsinghua.png" alt="Tsinghua University">
@@ -44,9 +46,14 @@
                 <img src="static/images/zju-logo-small.png" alt="Zhejiang University">
             </div>
             <div class="links">
-                <a href="https://github.com/EliSpectre/UI-MOPD" class="btn"><i class="fab fa-github"></i> Code</a>
+                <a href="https://github.com/EliSpectre/UI-MOPD" class="btn btn-dark"><i class="fab fa-github"></i> Code</a>
                 <a href="https://arxiv.org" class="btn"><i class="fas fa-file-pdf"></i> Paper</a>
-                <a href="https://huggingface.co/xiaomi-research/realgui" class="btn"><i class="fas fa-database"></i> Model</a>
+                <a href="https://huggingface.co/EliSpctre/UI-MOPD" class="btn btn-hf"><img src="static/images/hf_logo-1.png" alt="HF" style="height:1.3em;vertical-align:middle;margin-right:4px;"> Model</a>
+                <a href="https://huggingface.co/datasets/EliSpctre/Uni-GUI" class="btn btn-hf"><img src="static/images/hf_logo-1.png" alt="HF" style="height:1.3em;vertical-align:middle;margin-right:4px;"> Dataset</a>
+            </div>
+            </div>
+            <div class="hero-side hero-right">
+                <img src="static/images/UI-MOPD.png" alt="UI-MOPD">
             </div>
         </div>
     </header>
@@ -97,7 +104,7 @@
                 <h3>Key Components</h3>
                 <div class="method-cards three-col">
                     <div class="card">
-                        <h4>Platform-Conditioned Teacher Routing</h4>
+                        <h4 style="white-space:nowrap;">Platform-Conditioned Routing</h4>
                         <p>Routes each rollout to the corresponding platform-specific teacher based on the current environment type.</p>
                     </div>
                     <div class="card">
@@ -141,8 +148,44 @@
     <!-- Results -->
     <section class="section" id="results">
         <div class="container">
-            <h2>Results</h2>
-            <div class="results-highlight">
+            <h2>Main Results</h2>
+            <p class="results-desc" style="margin-bottom:24px;">Baselines and integration strategies on OSWorld and MobileWorld (Table 1).</p>
+            <div class="table-wrapper">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>OSWorld</th>
+                        <th>MobileWorld</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="group-header"><td colspan="3">General Models</td></tr>
+                    <tr><td>SeedVL-1.5</td><td>34.1%</td><td>--</td></tr>
+                    <tr><td>Qwen3-VL-8B-Instruct</td><td>33.9%</td><td>9.4%</td></tr>
+                    <tr><td>Qwen3-VL-8B-Thinking</td><td>33.9%</td><td>7.7%</td></tr>
+                    <tr><td>Qwen3-VL-32B-Instruct</td><td>32.6%</td><td>9.0%</td></tr>
+                    <tr><td>Qwen3-VL-235B-A22B-Instruct</td><td>31.6%</td><td>9.5%</td></tr>
+                    <tr><td>Qwen3-VL-235B-A22B-Thinking</td><td>38.1%</td><td>--</td></tr>
+                    <tr class="group-header"><td colspan="3">GUI Models (Single-Platform)</td></tr>
+                    <tr><td>OpenCUA-7B</td><td>28.2%</td><td>--</td></tr>
+                    <tr><td>OpenAI CUA o3</td><td>31.3%</td><td>--</td></tr>
+                    <tr><td>OpenCUA-32B</td><td>34.8%</td><td>--</td></tr>
+                    <tr class="group-header"><td colspan="3">GUI Models (Multi-Platform)</td></tr>
+                    <tr><td>UI-TARS-72B-DPO</td><td>27.1%</td><td>--</td></tr>
+                    <tr><td>UI-TARS-1.5-7B</td><td>27.4%</td><td>--</td></tr>
+                    <tr><td>GELab-Zero-4B</td><td>31.9%</td><td>10.9%</td></tr>
+                    <tr><td>GUI-Owl-7B</td><td>34.9%</td><td>4.5%</td></tr>
+                    <tr><td>GUI-Owl-32B</td><td>--</td><td>5.5%</td></tr>
+                    <tr class="group-header"><td colspan="3">Integration Strategies</td></tr>
+                    <tr><td>Mixed-SFT</td><td>35.0%</td><td>6.4%</td></tr>
+                    <tr><td>Model Merge (Weight Averaging)</td><td>36.5%</td><td>6.8%</td></tr>
+                    <tr><td>Model Merge (TIES Merging)</td><td>36.8%</td><td>0%</td></tr>
+                    <tr class="highlight-row"><td><strong>UI-MOPD (Ours)</strong></td><td><strong>38.2%</strong></td><td><strong>12.0%</strong></td></tr>
+                </tbody>
+            </table>
+            </div>
+            <div class="results-highlight" style="margin-top:32px;">
                 <div class="result-box">
                     <h3>OSWorld (Desktop)</h3>
                     <div class="result-number">38.2%</div>
@@ -155,6 +198,65 @@
                 </div>
             </div>
             <p class="results-desc">UI-MOPD achieves state-of-the-art balanced cross-platform performance, demonstrating effective capability retention on desktop while significantly improving mobile task success rate.</p>
+        </div>
+    </section>
+
+    <!-- Teacher-Student Analysis -->
+    <section class="section alt-bg" id="analysis">
+        <div class="container">
+            <h2>Teacher-Student Analysis</h2>
+            <p class="results-desc" style="margin-bottom:24px;">Teacher-student analysis on OSWorld and MobileWorld (Table 2).</p>
+            <div class="table-wrapper">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Method</th>
+                        <th>OSWorld</th>
+                        <th>MobileWorld</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="group-header"><td colspan="3">Base Models</td></tr>
+                    <tr><td>Qwen3-VL-8B-Thinking</td><td>33.9%</td><td>7.7%</td></tr>
+                    <tr><td>Qwen3-VL-32B-Thinking</td><td>41.0%</td><td>9.4%</td></tr>
+                    <tr class="group-header"><td colspan="3">Single-Platform SFT (8B)</td></tr>
+                    <tr><td>8B SFT on OSWorld</td><td>35.8%</td><td>0%</td></tr>
+                    <tr><td>8B SFT on MobileWorld</td><td>35.8%</td><td>12.8%</td></tr>
+                    <tr class="group-header"><td colspan="3">Platform-Specific Teachers (32B)</td></tr>
+                    <tr><td>Desktop Teacher, 32B</td><td>46.3%</td><td>–</td></tr>
+                    <tr><td>Mobile Teacher, 32B</td><td>–</td><td>16.2%</td></tr>
+                    <tr class="highlight-row"><td><strong>UI-MOPD (Ours)</strong></td><td><strong>38.2%</strong></td><td><strong>12.0%</strong></td></tr>
+                </tbody>
+            </table>
+            </div>
+            <p class="results-desc" style="margin-top:20px;max-width:900px;">UI-MOPD effectively distills knowledge from platform-specific 32B teachers into a shared 8B student, achieving balanced cross-platform performance that surpasses single-platform fine-tuning.</p>
+        </div>
+    </section>
+
+    <!-- Grounding Results -->
+    <section class="section" id="grounding">
+        <div class="container">
+            <h2>GUI Grounding &amp; Understanding</h2>
+            <p class="results-desc" style="margin-bottom:24px;">General GUI grounding, visual understanding, and AndroidControl results (Table 3).</p>
+            <div class="table-wrapper">
+            <table class="results-table">
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>AndroidControl*</th>
+                        <th>ScreenSpot-Pro</th>
+                        <th>ScreenSpotV2</th>
+                        <th>OSWorld-G</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Qwen3-VL-8B-Thinking</td><td>78.73%</td><td>43.71%</td><td>91.27%</td><td>52.13%</td></tr>
+                    <tr><td>Model Merge (TIES Merging)</td><td>74.01%</td><td>37.13%</td><td>88.60%</td><td>47.16%</td></tr>
+                    <tr class="highlight-row"><td><strong>UI-MOPD (Ours)</strong></td><td><strong>80.05%</strong></td><td>43.14%</td><td>90.88%</td><td><strong>52.84%</strong></td></tr>
+                </tbody>
+            </table>
+            </div>
+            <p class="results-desc" style="margin-top:20px;">UI-MOPD preserves GUI grounding and visual understanding capabilities while improving interactive task performance, unlike static parameter merging which shows clear degradation.</p>
         </div>
     </section>
 
@@ -193,5 +295,21 @@
             <p>UI-MOPD &copy; 2025. Built with academic project page template.</p>
         </div>
     </footer>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const elements = document.querySelectorAll('.card, .stat-card, .table-wrapper, .figure-wrapper, .result-box, .case-item');
+        elements.forEach(el => el.classList.add('animate-on-scroll'));
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        elements.forEach(el => observer.observe(el));
+    });
+    </script>
 </body>
 </html>

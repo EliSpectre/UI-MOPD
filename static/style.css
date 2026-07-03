@@ -37,8 +37,8 @@ body {
 
 /* Hero / Header */
 .hero {
-    background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
-    color: var(--white);
+    background: linear-gradient(135deg, #FFF3E8 0%, #FFECD6 100%);
+    color: var(--gray-800);
     padding: 60px 0 50px;
     text-align: center;
 }
@@ -55,6 +55,7 @@ body {
 
 .highlight-orange {
     color: var(--orange);
+    font-weight: 800;
 }
 
 .highlight-blue {
@@ -64,13 +65,14 @@ body {
 .authors {
     font-size: 1rem;
     margin-bottom: 8px;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--gray-800);
     line-height: 2;
+    font-weight: 600;
 }
 
 .author-notes {
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.65);
+    color: var(--gray-600);
     margin-bottom: 16px;
 }
 
@@ -80,7 +82,7 @@ body {
 
 .affiliations {
     font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.7);
+    color: var(--gray-600);
     margin-bottom: 24px;
 }
 
@@ -99,8 +101,7 @@ body {
 
 .logos img {
     height: 40px;
-    filter: brightness(0) invert(1);
-    opacity: 0.85;
+    opacity: 0.9;
 }
 
 .links {
@@ -120,15 +121,69 @@ body {
     font-weight: 600;
     font-size: 0.95rem;
     transition: all 0.2s ease;
-    background: rgba(255, 255, 255, 0.12);
+    background: #FF9544;
     color: var(--white);
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid #FF9544;
 }
 
 .btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #e55d00;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 103, 0, 0.3);
+}
+
+.btn-dark {
+    background: #4a4a5a;
+    border-color: #4a4a5a;
+}
+
+.btn-dark:hover {
+    background: #3a3a4a;
+}
+
+.btn-hf {
+    background: #FFE680;
+    border-color: #FFE680;
+    color: #1a1a2e;
+}
+
+.btn-hf:hover {
+    background: #FFD21E;
+}
+
+/* Hero layout with side images */
+.hero-content {
+    position: relative;
+}
+
+.hero-side {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 220px;
+}
+
+.hero-left {
+    left: -120px;
+}
+
+.hero-right {
+    right: -120px;
+}
+
+.hero-side img {
+    width: 100%;
+    border-radius: 12px;
+}
+
+.hero-center {
+    width: 100%;
+}
+
+@media (max-width: 1200px) {
+    .hero-side {
+        display: none;
+    }
 }
 
 /* Sections */
@@ -184,7 +239,7 @@ body {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
+    text-align: left;
 }
 
 /* Method Cards */
@@ -323,6 +378,73 @@ body {
     box-shadow: var(--shadow);
 }
 
+/* Results Table */
+.table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 8px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 103, 0, 0.12);
+}
+
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background: var(--white);
+}
+
+.results-table thead {
+    background: linear-gradient(135deg, #FF6700 0%, #FF9544 100%);
+    color: var(--white);
+}
+
+.results-table th {
+    padding: 14px 16px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.results-table th:first-child {
+    text-align: left;
+}
+
+.results-table td {
+    padding: 10px 16px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 103, 0, 0.06);
+}
+
+.results-table td:first-child {
+    text-align: left;
+}
+
+.results-table tbody tr:hover {
+    background: rgba(255, 103, 0, 0.03);
+}
+
+.results-table .group-header td {
+    background: linear-gradient(90deg, #FFF8F2 0%, #FFF3E8 100%);
+    font-weight: 600;
+    font-style: italic;
+    color: var(--orange);
+    font-size: 0.85rem;
+    padding: 8px 16px;
+    border-left: 3px solid var(--orange);
+}
+
+.results-table .highlight-row {
+    background: linear-gradient(90deg, #FFF3E8 0%, #FFECD6 100%);
+}
+
+.results-table .highlight-row td {
+    color: var(--orange);
+    font-weight: 700;
+    border-bottom: none;
+    padding: 12px 16px;
+}
+
 /* Citation */
 .bibtex {
     background: var(--gray-100);
@@ -372,6 +494,131 @@ footer {
     .logos img {
         height: 30px;
     }
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.animate-on-scroll:nth-child(2) { transition-delay: 0.1s; }
+.animate-on-scroll:nth-child(3) { transition-delay: 0.2s; }
+.animate-on-scroll:nth-child(4) { transition-delay: 0.3s; }
+
+/* Hero entrance */
+.hero .title {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.hero .authors {
+    animation: fadeInUp 0.8s ease 0.15s forwards;
+    opacity: 0;
+}
+
+.hero .logos {
+    animation: fadeInUp 0.8s ease 0.3s forwards;
+    opacity: 0;
+}
+
+.hero .links {
+    animation: fadeInUp 0.8s ease 0.45s forwards;
+    opacity: 0;
+}
+
+/* Card hover effects */
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(255, 103, 0, 0.12);
+}
+
+/* Stat card hover */
+.stat-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(255, 103, 0, 0.15);
+}
+
+/* Figure hover zoom */
+.figure-wrapper img {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.figure-wrapper img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Table wrapper entrance */
+.table-wrapper {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.table-wrapper:hover {
+    box-shadow: 0 12px 40px rgba(255, 103, 0, 0.15);
+}
+
+/* Result box pulse on hover */
+.result-box {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.result-box:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 16px 40px rgba(255, 103, 0, 0.18);
+}
+
+/* Hero side images float animation */
+@keyframes float {
+    0%, 100% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(calc(-50% - 8px)) translateX(0); }
+}
+
+.hero-side {
+    animation: float 4s ease-in-out infinite;
+}
+
+.hero-right {
+    animation-delay: 1s;
+}
+
+/* Case study image hover */
+.case-item img {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.case-item img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
 }
 
 @media (max-width: 480px) {
