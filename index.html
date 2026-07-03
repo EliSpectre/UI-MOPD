@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI-MOPD: Multi-platform On-Policy Distillation for Continual GUI Agent Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="hero">
+        <div class="container">
+            <h1 class="title">
+                <span class="highlight-orange">UI-MOPD</span>: Multi-platform On-Policy Distillation for Continual GUI Agent Learning
+            </h1>
+            <div class="authors">
+                <span>Niu Lian<sup>1,3</sup></span>,
+                <span>Alan Chen<sup>4</sup></span>,
+                <span>Zhehao Yu<sup>3</sup></span>,
+                <span>Chengzhen Duan<sup>2</sup></span>,
+                <span>Fazhan Liu<sup>2</sup></span>,
+                <span>Hui Liu<sup>2</sup></span>,
+                <span>Pei Fu<sup>2</sup></span>,
+                <span>Jian Luan<sup>2</sup></span>,
+                <span>Yaowei Wang<sup>3,5</sup></span>,
+                <span>Shu-Tao Xia<sup>1,5</sup></span>,
+                <span>Jinpeng Wang<sup>3</sup></span>
+            </div>
+            <div class="affiliations">
+                <p><sup>1</sup> Tsinghua Shenzhen International Graduate School, Tsinghua University</p>
+                <p><sup>2</sup> Xiaomi</p>
+                <p><sup>3</sup> Harbin Institute of Technology, Shenzhen</p>
+                <p><sup>4</sup> Zhejiang University</p>
+                <p><sup>5</sup> Peng Cheng Laboratory</p>
+            </div>
+            <div class="logos">
+                <img src="static/images/Tsinghua.png" alt="Tsinghua University">
+                <img src="static/images/xiaomi_logo-1.png" alt="Xiaomi">
+                <img src="static/images/hitsz.png" alt="HIT Shenzhen">
+                <img src="static/images/zju-logo-small.png" alt="Zhejiang University">
+            </div>
+            <div class="links">
+                <a href="https://github.com/EliSpectre/UI-MOPD" class="btn"><i class="fab fa-github"></i> Code</a>
+                <a href="https://arxiv.org" class="btn"><i class="fas fa-file-pdf"></i> Paper</a>
+                <a href="https://huggingface.co/xiaomi-research/realgui" class="btn"><i class="fas fa-database"></i> Model</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Abstract -->
+    <section class="section" id="abstract">
+        <div class="container">
+            <h2>Abstract</h2>
+            <p class="abstract-text">
+                Recent advances in multimodal foundation models and agent systems have driven GUI agents from single-platform task execution toward cross-platform interaction. However, building multi-platform GUI agents remains challenging. On one hand, high-quality and executable cross-platform interaction trajectories are still scarce, and existing data often suffer from limited platform coverage. On the other hand, different platforms exhibit distinct interaction conventions, making joint or continual training prone to behavioral pattern mixing, platform-specific capability degradation, and catastrophic forgetting. To address these challenges, we construct <strong class="highlight-blue">Uni-GUI</strong>, a high-quality cross-platform GUI interaction dataset, and propose <strong class="highlight-orange">UI-MOPD</strong>, the first method that incorporates multi-teacher on-policy distillation into continual learning for GUI agents. UI-MOPD dynamically selects a platform-specific teacher according to the current environment and transfers platform-specific behavioral priors to a shared policy through platform-conditioned distillation, enabling adaptation to new platforms while preserving capabilities on existing ones. Experiments on OSWorld and MobileWorld show that UI-MOPD achieves task success rates of <strong>38.2%</strong> and <strong>12.0%</strong>, respectively, demonstrating its effectiveness in balancing cross-platform capability retention and new-platform adaptation.
+            </p>
+        </div>
+    </section>
+
+    <!-- Motivation -->
+    <section class="section alt-bg" id="motivation">
+        <div class="container">
+            <h2>Motivation</h2>
+            <div class="figure-wrapper">
+                <img src="static/images/intro-1.png" alt="Motivation of UI-MOPD">
+                <p class="caption"><strong>Figure 1.</strong> Motivation of UI-MOPD. Naively combining desktop and mobile signals, as in model merging or mixed SFT, can mix platform-specific behavioral conventions and produce an averaged policy. UI-MOPD uses platform-conditioned routing and multi-teacher on-policy distillation to integrate platform-specific expertise into a shared GUI agent.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Method -->
+    <section class="section" id="method">
+        <div class="container">
+            <h2>Method</h2>
+            <div class="method-overview">
+                <h3>Two-Stage Training Pipeline</h3>
+                <div class="method-cards">
+                    <div class="card">
+                        <h4><i class="fas fa-graduation-cap"></i> Stage 1: Supervised Fine-Tuning</h4>
+                        <p>Fine-tune Qwen3-VL-32B-Thinking on the Uni-GUI dataset to obtain platform-specific expert teachers: a <strong>desktop teacher</strong> and a <strong>mobile teacher</strong>.</p>
+                    </div>
+                    <div class="card">
+                        <h4><i class="fas fa-network-wired"></i> Stage 2: Multi-Teacher On-Policy Distillation</h4>
+                        <p>Train a shared student policy (Qwen3-VL-8B-Thinking) with reinforcement learning and platform-conditioned teacher routing for continual cross-platform learning.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="figure-wrapper">
+                <img src="static/images/method-1.png" alt="UI-MOPD Method Overview">
+                <p class="caption"><strong>Figure 2.</strong> Overview of the UI-MOPD training pipeline. Stage 1 performs supervised fine-tuning to obtain platform-specific teachers. Stage 2 applies multi-teacher on-policy distillation with platform-conditioned routing, adaptive KL masking, and structured outcome reward.</p>
+            </div>
+            <div class="method-details">
+                <h3>Key Components</h3>
+                <div class="method-cards three-col">
+                    <div class="card">
+                        <h4>Platform-Conditioned Teacher Routing</h4>
+                        <p>Routes each rollout to the corresponding platform-specific teacher based on the current environment type.</p>
+                    </div>
+                    <div class="card">
+                        <h4>K3 Estimator</h4>
+                        <p>Efficient single-sample KL divergence estimator that avoids full vocabulary computation, reducing memory and compute overhead.</p>
+                    </div>
+                    <div class="card">
+                        <h4>Adaptive KL Masking</h4>
+                        <p>Removes teacher penalty when task reward is already sufficient, preventing over-regularization.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dataset -->
+    <section class="section alt-bg" id="dataset">
+        <div class="container">
+            <h2>Uni-GUI Dataset</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">~160K</div>
+                    <div class="stat-label">Interaction Steps</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">~11.5K</div>
+                    <div class="stat-label">Trajectories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Platforms (Desktop + Mobile)</div>
+                </div>
+            </div>
+            <div class="figure-wrapper">
+                <img src="static/images/harness-1.png" alt="Data Collection Harness">
+                <p class="caption"><strong>Figure 3.</strong> Overview of the Unified Cross-Platform Data Collection Harness used to build the Uni-GUI dataset.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="section" id="results">
+        <div class="container">
+            <h2>Results</h2>
+            <div class="results-highlight">
+                <div class="result-box">
+                    <h3>OSWorld (Desktop)</h3>
+                    <div class="result-number">38.2%</div>
+                    <div class="result-improvement">+12.7% relative improvement</div>
+                </div>
+                <div class="result-box">
+                    <h3>MobileWorld (Mobile)</h3>
+                    <div class="result-number">12.0%</div>
+                    <div class="result-improvement">+55.8% relative improvement</div>
+                </div>
+            </div>
+            <p class="results-desc">UI-MOPD achieves state-of-the-art balanced cross-platform performance, demonstrating effective capability retention on desktop while significantly improving mobile task success rate.</p>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="section alt-bg" id="cases">
+        <div class="container">
+            <h2>Case Studies</h2>
+            <div class="case-grid">
+                <div class="case-item">
+                    <h3><i class="fas fa-desktop"></i> Desktop</h3>
+                    <img src="static/images/desktopcase-1.png" alt="Desktop Case Study">
+                </div>
+                <div class="case-item">
+                    <h3><i class="fas fa-mobile-alt"></i> Mobile</h3>
+                    <img src="static/images/mobilecase-1.png" alt="Mobile Case Study">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BibTeX -->
+    <section class="section" id="citation">
+        <div class="container">
+            <h2>Citation</h2>
+            <pre class="bibtex"><code>@article{lian2025uimopd,
+  title={UI-MOPD: Multi-platform On-Policy Distillation for Continual GUI Agent Learning},
+  author={Lian, Niu and Chen, Alan and Yu, Zhehao and Duan, Chengzhen and Liu, Fazhan and Liu, Hui and Fu, Pei and Luan, Jian and Wang, Yaowei and Xia, Shu-Tao and Wang, Jinpeng},
+  year={2025}
+}</code></pre>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>UI-MOPD &copy; 2025. Built with academic project page template.</p>
+        </div>
+    </footer>
+</body>
+</html>
