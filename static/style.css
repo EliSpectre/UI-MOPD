@@ -63,9 +63,15 @@ body {
 
 .authors {
     font-size: 1rem;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     color: rgba(255, 255, 255, 0.9);
     line-height: 2;
+}
+
+.author-notes {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin-bottom: 16px;
 }
 
 .authors span {
