@@ -13,7 +13,7 @@
     --shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
     --radius: 12px;
-    --max-width: 1100px;
+    --max-width: 1200px;
 }
 
 * {
@@ -44,11 +44,11 @@ body {
 }
 
 .title {
-    font-size: 2.3rem;
+    font-size: 2.6rem;
     font-weight: 700;
     line-height: 1.3;
     margin-bottom: 24px;
-    max-width: 900px;
+    max-width: 960px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -63,7 +63,7 @@ body {
 }
 
 .authors {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     margin-bottom: 8px;
     color: var(--gray-800);
     line-height: 2;
@@ -71,7 +71,7 @@ body {
 }
 
 .author-notes {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--gray-600);
     margin-bottom: 16px;
 }
@@ -81,7 +81,7 @@ body {
 }
 
 .affiliations {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--gray-600);
     margin-bottom: 24px;
 }
@@ -100,7 +100,7 @@ body {
 }
 
 .logos img {
-    height: 48px;
+    height: 56px;
     opacity: 0.9;
 }
 
@@ -115,11 +115,11 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 28px;
+    padding: 14px 32px;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.05rem;
     transition: all 0.2s ease;
     background: #FF9544;
     color: var(--white);
@@ -160,15 +160,15 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 260px;
+    width: 300px;
 }
 
 .hero-left {
-    left: -120px;
+    left: -140px;
 }
 
 .hero-right {
-    right: -120px;
+    right: -140px;
 }
 
 .hero-side img {
@@ -196,7 +196,7 @@ body {
 }
 
 .section h2 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 28px;
     color: var(--dark);
@@ -212,11 +212,11 @@ body {
 
 /* Abstract */
 .abstract-text {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     line-height: 1.8;
     color: var(--gray-800);
     text-align: justify;
-    max-width: 950px;
+    max-width: 1050px;
     margin: 0 auto;
 }
 
