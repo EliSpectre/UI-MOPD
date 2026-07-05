@@ -1,0 +1,58 @@
+hydra:
+  searchpath:
+    - file://verl/trainer/config
+
+defaults:
+  - ppo_megatron_trainer
+  - _self_
+
+data:
+  gen_batch_size: ${data.train_batch_size}
+  add_reasoning_content: False
+  use_dynamic_history: False
+  # the size of the thought buffer
+  thought_buffer_size: 1
+
+  dynamic_sampling:
+    enabled: True
+    total_step: 100000
+    passrate1_strategy: replay
+    replay_decay_factor: 0.2
+    replay_min_ratio: 0.04
+    reset_queue: False
+
+reward_model:
+  reward_manager: dapo
+  overlong_buffer: 
+    enable: False # We try to avoid forgetting to set enable
+    len: 0
+    penalty_factor: 0.0
+    log: False
+  thought_match:
+    enable: False
+    base_url: null
+    start_step: 0
+  thought_knowledge_match:
+    enable: False
+    base_url: null
+  llm_compare_text:
+    enable: False
+    base_url: null
+
+
+algorithm:
+  filter_groups:
+    _target_: verl.trainer.config.FilterGroupsConfig
+    enable: False # We try to avoid forgetting to set enable
+    metric: null # acc / score / seq_reward / seq_final_reward / ...
+    max_num_gen_batches: 0 # Non-positive values mean no upper limit
+    low_score_threshold: 0 # loss passrate0 threshold for dapo
+    high_score_threshold: 1 # loss passrate1 threshold for dapo
+
+trainer:
+  project_name: verl-dapo
+  record_data: False
+  use_dynamic_history: False
+  # the size of the thought buffer
+  thought_buffer_size: 1
+

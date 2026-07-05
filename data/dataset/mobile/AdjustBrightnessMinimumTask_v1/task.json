@@ -1,0 +1,379 @@
+{
+    "task": "MobileWorld",
+    "app": "settings",
+    "screen_resolution": [
+        1080,
+        2400
+    ],
+    "query": "Please adjust the device's display brightness to the lowest possible setting.",
+    "episode_id": "AdjustBrightnessMinimumTask_v1",
+    "is_delete": false,
+    "is_mock": false,
+    "device": "mobile",
+    "verified": false,
+    "task_completed": true,
+    "data": [
+        {
+            "step": 1,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "The task is to adjust the device's display brightness to the lowest setting. The current screen is the home screen. No actions have been taken yet.\n\nPlan:\n1. Open the Settings app.\n2. Navigate to Display settings.\n3. Find the brightness level setting and adjust it to the minimum.\n\nPossible next actions:\n- Tap the Settings app icon on the home screen.\n- Swipe down from the top to open the quick settings panel and adjust brightness there.\n- Open the app drawer to find the Settings app.\n\nTapping the Settings app icon is a direct and reliable way to access the device's display settings, as it's clearly visible on the home screen.\n\nExpected consequence:\nThe Settings app will open, displaying a list of various settings categories.",
+            "action": "Tap the Settings app icon on the home screen to open the device settings.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "click",
+                    "coordinate": [
+                        850,
+                        821
+                    ]
+                }
+            },
+            "bbox": [
+                [
+                    776,
+                    788
+                ],
+                [
+                    924,
+                    854
+                ]
+            ],
+            "screenshot": "screenshot_step0.png",
+            "code": "{\"action_type\": \"click\", \"coordinate\": [850, 850]}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "I need to open the Settings app to adjust the display brightness. The Settings app icon is located at the bottom right of the screen."
+        },
+        {
+            "step": 2,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "The current state shows the main Settings menu. The previous action successfully opened the Settings app. The task requires adjusting the display brightness to the lowest setting, which is located in the Display settings.\n\nPlan:\n1) Scroll down the Settings menu to find the \"Display\" section.\n2) Tap on \"Display\".\n3) Locate the brightness slider and adjust it to the minimum.\n\nPossible next actions:\n- Swipe up on the screen to scroll down the Settings list.\n- Tap the \"Search settings\" bar and type \"brightness\".\n- Tap one of the currently visible options (none are relevant).\n\nSwiping up to scroll is the standard and most direct way to reveal the \"Display\" option, which is typically found further down the main Settings menu.\n\nExpected consequence:\n- The screen will scroll down, revealing more settings categories including \"Display\".",
+            "action": "Swipe up on the screen to scroll down the Settings list and reveal the Display option.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "swipe",
+                    "coordinate": [
+                        500,
+                        762
+                    ],
+                    "coordinate2": [
+                        500,
+                        381
+                    ]
+                }
+            },
+            "bbox": [
+                [
+                    450,
+                    712
+                ],
+                [
+                    550,
+                    812
+                ]
+            ],
+            "screenshot": "screenshot_step1.png",
+            "code": "{\"action_type\": \"scroll\", \"direction\": \"down\"}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "I am in the Settings app. I need to find the \"Display\" option, which is not currently visible. I will scroll down to find it.",
+            "bbox2": [
+                [
+                    450,
+                    331
+                ],
+                [
+                    550,
+                    431
+                ]
+            ]
+        },
+        {
+            "step": 3,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "The Settings app is open and the \"Display\" option is now visible on the screen. To adjust the brightness, I need to access the display settings.\n\nPlan:\n1) Tap \"Display\" to open the display settings menu.\n2) Locate the brightness slider.\n3) Adjust the slider to the minimum value.\n\nPossible next actions:\n- Tap \"Display\" to access the relevant settings.\n- Use the search bar at the top to search for \"brightness\".\n\nTapping \"Display\" directly is the most efficient action since the option is already visible and explicitly lists \"brightness\" as a sub-item.\n\nExpected consequence:\nThe Display settings page will appear, revealing the brightness level control.",
+            "action": "Tap the \"Display\" option to access the display settings.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "click",
+                    "coordinate": [
+                        499,
+                        834
+                    ]
+                }
+            },
+            "bbox": [
+                [
+                    0,
+                    786
+                ],
+                [
+                    999,
+                    882
+                ]
+            ],
+            "screenshot": "screenshot_step2.png",
+            "code": "{\"action_type\": \"click\", \"coordinate\": [835, 350]}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "I see the \"Display\" option now. I will click on it to access the brightness settings."
+        },
+        {
+            "step": 4,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "The current screen shows the 'Apps' settings page, but the task requires adjusting the display brightness. The previous action step 3 stated an intent to click on 'Display', but it seems a misclick or incorrect navigation led to the 'Apps' page instead.\nTo get to the 'Display' settings, I need to go back to the main Settings menu.\n\nPlan:\n1) Go back to the main Settings menu.\n2) Locate and tap the 'Display' option.\n3) Adjust the brightness slider to the lowest setting.\n\nPossible next actions:\n- Tap the back arrow icon at the top left.\n- Use the system back button.\n- Go home and restart the Settings app.\n\nUsing the system back button is the most standard and reliable way to return to the previous screen (main Settings menu).\n\nExpected consequence:\n- The screen will return to the main Settings menu where the 'Display' option should be accessible.",
+            "action": "Press the system back button to return to the main Settings menu.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "system_button",
+                    "button": "Back"
+                }
+            },
+            "bbox": [],
+            "screenshot": "screenshot_step3.png",
+            "code": "{\"action_type\": \"navigate_back\"}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "I accidentally clicked on \"Apps\" instead of \"Display\". I need to go back to the main Settings menu."
+        },
+        {
+            "step": 5,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "The user is on the main Settings menu after returning from an incorrect tap. The 'Display' option is visible on the screen. To adjust the brightness, the next step is to access the Display settings.\n\nPlan:\n1) Tap on 'Display' in the Settings menu.\n2) Locate the brightness slider and adjust it to the lowest setting.\n\nPossible next actions:\n- Tap the 'Display' option.\n- Use the 'Search settings' bar to search for 'brightness'.\n- Scroll down further.\n\nTapping the 'Display' option directly is the most efficient action as it is clearly visible and leads straight to the required settings.\n\nExpected consequence:\n- The Display settings page will open, presenting options such as brightness level, dark theme, and font size.",
+            "action": "Tap on the 'Display' option to access display settings.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "click",
+                    "coordinate": [
+                        499,
+                        834
+                    ]
+                }
+            },
+            "bbox": [
+                [
+                    0,
+                    786
+                ],
+                [
+                    999,
+                    882
+                ]
+            ],
+            "screenshot": "screenshot_step4.png",
+            "code": "{\"action_type\": \"click\", \"coordinate\": [835, 350]}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "I am back on the main Settings menu. Now I will carefully click on the \"Display\" option."
+        },
+        {
+            "step": 6,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "1. **Brief context**: The user is currently in the 'Apps' settings menu after an accidental click. The goal is to adjust the display brightness, which requires being in the 'Display' menu.\n2. **Plan**:\n   - Navigate back to the main Settings menu.\n   - Select the 'Display' option.\n   - Adjust the brightness slider to the minimum.\n3. **Possible next actions**:\n   - Tap the on-screen back arrow at the top left.\n   - Use the system back navigation button.\n4. **Best choice reasoning**: Using the system back button is a reliable and direct way to return to the previous screen (the main Settings menu) to correct the navigation error.\n5. **Expected consequence**: The screen will return to the main Settings menu, where the 'Display' option can be selected.",
+            "action": "Press the system back button to return to the main Settings menu.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "system_button",
+                    "button": "Back"
+                }
+            },
+            "bbox": [],
+            "screenshot": "screenshot_step5.png",
+            "code": "{\"action_type\": \"navigate_back\"}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "I accidentally clicked on \"Apps\" again because I swapped the x and y coordinates. I need to go back to the main Settings menu."
+        },
+        {
+            "step": 7,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "1. **Brief context**: I am currently on the main Settings menu. Previous attempts to click 'Display' failed due to incorrect coordinate inputs, resulting in opening 'Apps' instead.\n2. **Plan**:\n   1) Tap the 'Display' option correctly.\n   2) Locate the brightness slider in the Display settings.\n   3) Drag the slider to the lowest setting.\n3. **Possible next actions**:\n   - Tap 'Display'.\n   - Scroll down further (unnecessary as Display is visible).\n   - Use the search bar to search for 'brightness'.\n4. **Best choice reasoning**: Tapping 'Display' directly is the most straightforward path since the option is clearly visible on the screen.\n5. **Expected consequence**: The Display settings menu will open, revealing options for brightness level, dark theme, and other display-related configurations.",
+            "action": "Tap the 'Display' option to access display settings.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "click",
+                    "coordinate": [
+                        499,
+                        838
+                    ]
+                }
+            },
+            "bbox": [
+                [
+                    0,
+                    790
+                ],
+                [
+                    999,
+                    886
+                ]
+            ],
+            "screenshot": "screenshot_step6.png",
+            "code": "{\"action_type\": \"click\", \"coordinate\": [350, 835]}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "I am back on the main Settings menu. Now I will correctly click on the \"Display\" option. The previous mistake was swapping the x and y coordinates. The correct coordinates for \"Display\" are approximately [350, 835]."
+        },
+        {
+            "step": 8,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "1. **Brief context**: The current state is the Display settings menu, accessed after navigating from the main Settings app. The user wants to adjust the brightness to the lowest setting.\n2. **Plan**: \n   1) Tap 'Brightness level' to access the brightness slider.\n   2) Move the slider to the minimum value (0%).\n3. **Possible next actions**:\n   - Tap 'Brightness level' to open the brightness adjustment controls.\n   - Tap the back button to return to the main Settings menu.\n   - Scroll down to see more display settings.\n4. **Best choice reasoning**: Tapping 'Brightness level' is the direct and necessary step to access the slider required to lower the brightness.\n5. **Expected consequence**: A brightness slider or a new screen with a brightness slider will appear, allowing for adjustment.",
+            "action": "Tap 'Brightness level' to access the brightness adjustment controls.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "click",
+                    "coordinate": [
+                        499,
+                        355
+                    ]
+                }
+            },
+            "bbox": [
+                [
+                    0,
+                    309
+                ],
+                [
+                    999,
+                    401
+                ]
+            ],
+            "screenshot": "screenshot_step7.png",
+            "code": "{\"action_type\": \"click\", \"coordinate\": [300, 350]}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "I am now in the Display settings. I need to click on \"Brightness level\" to adjust the brightness."
+        },
+        {
+            "step": 9,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "1. **Brief context**: The device is currently in the Display settings menu, and the brightness slider is visible at the top of the screen.\n2. **Plan**: 1) Swipe the brightness slider handle to the far left to set the brightness to the lowest possible setting.\n3. **Possible next actions**:\n- Swipe left on the brightness slider handle.\n- Tap the far left end of the brightness slider.\n4. **Best choice reasoning**: Swiping left on the slider handle is the most reliable and natural interaction to ensure the brightness is dragged all the way to the minimum value.\n5. **Expected consequence**: The slider handle will move to the far left, and the screen's brightness level will drop to the minimum setting.",
+            "action": "Swipe left on the brightness slider at the top of the screen to minimize the brightness.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "swipe",
+                    "coordinate": [
+                        480,
+                        88
+                    ],
+                    "coordinate2": [
+                        100,
+                        88
+                    ]
+                }
+            },
+            "bbox": [
+                [
+                    440,
+                    60
+                ],
+                [
+                    520,
+                    116
+                ]
+            ],
+            "screenshot": "screenshot_step8.png",
+            "code": "{\"action_type\": \"drag\", \"start_coordinate\": [480, 88], \"end_coordinate\": [100, 88]}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "The brightness slider is now visible at the top of the screen. To set the brightness to the lowest possible setting, I need to drag the slider handle all the way to the left.",
+            "bbox2": [
+                [
+                    40,
+                    60
+                ],
+                [
+                    160,
+                    116
+                ]
+            ]
+        },
+        {
+            "step": 10,
+            "query": "Please adjust the device's display brightness to the lowest possible setting.",
+            "thought": "1. **Brief context**: The user wants to adjust the device's display brightness to the lowest possible setting. The current screen shows the 'Display' settings page, and the brightness level is currently at 7%, with the slider handle all the way to the left. The previous step was to drag the slider to the left.\n2. **Plan**:\n   1. Check if the brightness is at the lowest setting.\n   2. Since the slider is at the leftmost position and the level is 7% (which is likely the minimum allowed by the system or represents the lowest visual setting achieved via the slider), the task is complete.\n   3. Terminate the task successfully.\n3. **Possible next actions**:\n   - Terminate the task indicating success.\n   - Attempt to interact with the brightness slider again (unnecessary as it's already at the minimum).\n4. **Best choice reasoning**: The brightness slider has already been moved to the far left, achieving the lowest possible setting for this interface. No further action is required to fulfill the user's request.\n5. **Expected consequence**: The task will end successfully.",
+            "action": "Terminate the task successfully as the brightness is already at the lowest setting.",
+            "pixel": [
+                1080,
+                2400
+            ],
+            "plan": {
+                "name": "mobile_use",
+                "arguments": {
+                    "action": "terminate",
+                    "status": "success"
+                }
+            },
+            "bbox": [],
+            "screenshot": "screenshot_step9.png",
+            "code": "{\"action_type\": \"status\", \"goal_status\": \"complete\"}",
+            "is_use": true,
+            "is_reviewed": false,
+            "is_delete": false,
+            "train_test": "test",
+            "raw_thought": "The brightness slider has been dragged to the far left, setting the brightness to the lowest possible level. The task is complete."
+        }
+    ]
+}

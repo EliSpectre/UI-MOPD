@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenCUA Data Review</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #f0f2f5; --sidebar-bg: #fff; --card-bg: #fff; --primary: #4f6ef7;
+  --primary-light: #e8ecff; --text: #1a1a2e; --text-secondary: #6b7280;
+  --border: #e5e7eb; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --radius: 12px;
+}
+body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); }
+.layout { display: flex; height: 100vh; }
+.sidebar { width: 340px; min-width: 340px; background: var(--sidebar-bg); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+.sidebar-header { padding: 20px; border-bottom: 1px solid var(--border); }
+.sidebar-header h2 { font-size: 18px; margin-bottom: 6px; }
+.stats { font-size: 13px; color: var(--text-secondary); }
+.filters { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px; }
+.filters select, .filters input { padding: 7px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; outline: none; width: 100%; }
+.task-list { flex: 1; overflow-y: auto; padding: 8px; }
+.task-item { padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 4px; border: 1px solid transparent; transition: all .15s; }
+.task-item:hover { background: var(--primary-light); }
+.task-item.active { background: var(--primary-light); border-color: var(--primary); }
+.task-app { font-size: 11px; color: var(--primary); font-weight: 600; text-transform: uppercase; }
+.task-query { font-size: 12px; color: var(--text-secondary); margin-top: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.task-badges { margin-top: 4px; display: flex; gap: 6px; align-items: center; }
+.badge { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+.badge-verified { background: #d1fae5; color: #065f46; }
+.badge-unverified { background: #fef3c7; color: #92400e; }
+.badge-steps { background: #e0e7ff; color: #3730a3; }
+.pager { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 12px; }
+.pager button { padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; font-size: 12px; }
+.pager button:disabled { opacity: .4; cursor: default; }
+.main { flex: 1; overflow-y: auto; padding: 24px; }
+.placeholder { display: flex; align-items: center; justify-content: center; height: 100%; color: var(--text-secondary); font-size: 16px; }
+.task-header { background: var(--card-bg); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.meta-item { display: flex; flex-direction: column; }
+.meta-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; letter-spacing: .5px; }
+.meta-value { font-size: 14px; margin-top: 2px; word-break: break-all; }
+.meta-query { margin-top: 12px; }
+.meta-query .meta-value { font-size: 13px; line-height: 1.5; margin-top: 4px; }
+.step-nav { display: flex; align-items: center; gap: 12px; background: var(--card-bg); border-radius: var(--radius); padding: 12px 20px; margin-bottom: 16px; border: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
+.step-nav button { padding: 6px 16px; border: 1px solid var(--border); border-radius: 8px; background: white; cursor: pointer; font-size: 13px; font-weight: 600; }
+.step-nav button:hover { background: var(--primary-light); border-color: var(--primary); }
+#stepIndicator { font-size: 14px; font-weight: 600; min-width: 80px; text-align: center; }
+.toggle { font-size: 13px; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; margin-left: auto; cursor: pointer; white-space: nowrap; }
+.step-card { background: var(--card-bg); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; border: 2px solid var(--border); transition: border-color .2s; }
+.step-card.active { border-color: var(--primary); }
+.step-card.hidden { display: none; }
+.step-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+.step-badge { background: var(--primary); color: white; padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; }
+.step-action-type { font-size: 13px; font-weight: 600; color: var(--primary); }
+.chip { font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+.chip-correct { background: #d1fae5; color: #065f46; }
+.chip-incorrect { background: #fee2e2; color: #991b1b; }
+.chip-redundant { background: #fef3c7; color: #92400e; }
+.step-body { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 1200px) { .step-body { grid-template-columns: 1fr; } }
+.screenshot-wrapper { position: relative; border-radius: 8px; overflow: hidden; background: #000; max-width: 540px; }
+.screenshot-wrapper.mobile { max-width: 260px; margin: 0 auto; }
+.screenshot-wrapper img { width: 100%; height: auto; display: block; }
+.click-marker { position: absolute; width: 24px; height: 24px; border-radius: 50%; border: 3px solid #ef4444; background: rgba(239,68,68,.3); transform: translate(-50%,-50%); pointer-events: none; box-shadow: 0 0 0 4px rgba(239,68,68,.15); }
+.click-marker::after { content:''; position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; background: #ef4444; border-radius: 50%; transform: translate(-50%,-50%); }
+.coord-label { position: absolute; background: rgba(0,0,0,.75); color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 4px; transform: translate(-50%,16px); pointer-events: none; white-space: nowrap; }
+.bbox-overlay { position: absolute; border: 2px solid #22c55e; background: rgba(34,197,94,.15); pointer-events: none; border-radius: 2px; }
+.bbox-label { position: absolute; top: -18px; left: 0; background: #22c55e; color: #fff; font-size: 10px; padding: 1px 5px; border-radius: 3px; white-space: nowrap; }
+.step-fields { display: flex; flex-direction: column; gap: 10px; }
+.field-group { display: flex; flex-direction: column; }
+.field-label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; letter-spacing: .5px; margin-bottom: 3px; }
+.field-value { font-size: 13px; line-height: 1.6; padding: 8px 10px; background: #f9fafb; border: 1px solid var(--border); border-radius: 8px; max-height: 200px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+.field-value.code { font-family: "Cascadia Code","Fira Code",monospace; font-size: 12px; }
+.field-value.thought { border-left: 3px solid var(--primary); }
+.field-value.action { border-left: 3px solid var(--success); }
+.field-value.observation { border-left: 3px solid var(--warning); max-height: 120px; }
+.field-value.reflection { border-left: 3px solid #8b5cf6; max-height: 120px; }
+.lightbox { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,.85); z-index: 9999; align-items: center; justify-content: center; cursor: zoom-out; }
+.lightbox.active { display: flex; }
+.lightbox img { max-width: 92vw; max-height: 92vh; border-radius: 8px; box-shadow: 0 8px 32px rgba(0,0,0,.5); }
+.lightbox .screenshot-wrapper { max-width: 92vw; max-height: 92vh; margin: 0; }
+.lightbox .screenshot-wrapper.mobile { max-width: 45vw; }
+.lightbox .screenshot-wrapper img { max-height: 92vh; width: auto; }
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>OpenCUA Review</h2>
+      <div class="stats" id="stats"></div>
+    </div>
+    <div class="filters">
+      <select id="filterApp"><option value="">All Apps</option></select>
+      <input id="filterKeyword" type="text" placeholder="Search query...">
+      <select id="filterVerified">
+        <option value="">All</option>
+        <option value="true">Verified</option>
+        <option value="false">Unverified</option>
+      </select>
+    </div>
+    <div class="task-list" id="taskList"></div>
+  </aside>
+  <main class="main">
+    <div class="placeholder" id="placeholder"><p>Select a task from the sidebar</p></div>
+    <div class="task-header" id="taskHeader" style="display:none">
+      <div class="meta-grid">
+        <div class="meta-item"><span class="meta-label">Episode ID</span><span class="meta-value" id="metaEpisodeId"></span></div>
+        <div class="meta-item"><span class="meta-label">App</span><span class="meta-value" id="metaApp"></span></div>
+        <div class="meta-item"><span class="meta-label">Resolution</span><span class="meta-value" id="metaResolution"></span></div>
+        <div class="meta-item"><span class="meta-label">Verified</span><span class="meta-value" id="metaVerified"></span></div>
+        <div class="meta-item"><span class="meta-label">Steps</span><span class="meta-value" id="metaSteps"></span></div>
+      </div>
+      <div class="meta-query"><span class="meta-label">Query</span><div class="meta-value" id="metaQuery"></div></div>
+    </div>
+    <div class="step-nav" id="stepNav" style="display:none">
+      <button id="btnPrev" onclick="navigateStep(-1)">Prev</button>
+      <span id="stepIndicator"></span>
+      <button id="btnNext" onclick="navigateStep(1)">Next</button>
+      <label class="toggle"><input type="checkbox" id="showCoord" checked onchange="toggleCoords()"> Show Click</label>
+      <label class="toggle"><input type="checkbox" id="showBbox" checked onchange="toggleBbox()"> Show BBox</label>
+      <label class="toggle"><input type="checkbox" id="showAllSteps" onchange="toggleAllSteps()"> All Steps</label>
+    </div>
+    <div id="stepContainer"></div>
+  </main>
+</div>
+<script>
+const BASE = window.location.pathname.replace(/\/+$/, '');
+
+const state = {
+  tasks: [], currentTask: null, currentDirName: null,
+  currentStepIndex: 0, showAllSteps: false, page: 1, totalPages: 1, total: 0,
+};
+
+function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+function esc(text) { const d = document.createElement("div"); d.textContent = text; return d.innerHTML; }
+
+async function bootstrap() {
+  document.getElementById("filterApp").addEventListener("change", () => { state.page = 1; loadTasks(); });
+  document.getElementById("filterKeyword").addEventListener("input", debounce(() => { state.page = 1; loadTasks(); }, 400));
+  document.getElementById("filterVerified").addEventListener("change", () => { state.page = 1; loadTasks(); });
+  await loadTasks();
+}
+
+async function loadTasks() {
+  const app = document.getElementById("filterApp").value;
+  const kw = document.getElementById("filterKeyword").value;
+  const verified = document.getElementById("filterVerified").value;
+  const params = new URLSearchParams({ page: state.page, per_page: 100 });
+  if (app) params.set("app", app);
+  if (kw) params.set("keyword", kw);
+  if (verified) params.set("verified", verified);
+
+  const res = await fetch(BASE + "/api/tasks?" + params);
+  const data = await res.json();
+  state.tasks = data.tasks;
+  state.total = data.total;
+  state.totalPages = data.total_pages;
+
+  const appSelect = document.getElementById("filterApp");
+  if (appSelect.options.length <= 1) {
+    data.apps.forEach(a => { const o = document.createElement("option"); o.value = a; o.textContent = a; appSelect.appendChild(o); });
+  }
+  document.getElementById("stats").textContent = data.total + " tasks";
+  renderTaskList();
+}
+
+function renderTaskList() {
+  const list = document.getElementById("taskList");
+  list.innerHTML = "";
+  state.tasks.forEach(t => {
+    const div = document.createElement("div");
+    div.className = "task-item" + (t.dir_name === state.currentDirName ? " active" : "");
+    div.innerHTML = '<div class="task-app">' + esc(t.app) + '</div><div class="task-query">' + esc(t.query) + '</div><div class="task-badges"><span class="badge ' + (t.verified ? 'badge-verified' : 'badge-unverified') + '">' + (t.verified ? 'Verified' : 'Unverified') + '</span><span class="badge badge-steps">' + t.num_steps + ' steps</span></div>';
+    div.onclick = () => selectTask(t.dir_name);
+    list.appendChild(div);
+  });
+  if (state.totalPages > 1) {
+    const p = document.createElement("div");
+    p.className = "pager";
+    p.innerHTML = '<button ' + (state.page <= 1 ? 'disabled' : '') + ' onclick="changePage(-1)">Prev</button><span>' + state.page + ' / ' + state.totalPages + '</span><button ' + (state.page >= state.totalPages ? 'disabled' : '') + ' onclick="changePage(1)">Next</button>';
+    list.appendChild(p);
+  }
+}
+
+function changePage(delta) { state.page = Math.max(1, Math.min(state.totalPages, state.page + delta)); loadTasks(); }
+
+async function selectTask(dirName) {
+  state.currentDirName = dirName;
+  state.currentStepIndex = 0;
+  const res = await fetch(BASE + "/api/tasks/" + dirName);
+  state.currentTask = await res.json();
+  renderTaskList();
+  renderTask();
+}
+
+function renderTask() {
+  const task = state.currentTask;
+  document.getElementById("placeholder").style.display = "none";
+  document.getElementById("taskHeader").style.display = "block";
+  document.getElementById("stepNav").style.display = "flex";
+  document.getElementById("metaEpisodeId").textContent = task.episode_id;
+  document.getElementById("metaApp").textContent = task.app;
+  const r = task.screen_resolution;
+  document.getElementById("metaResolution").textContent = r ? r[0] + "x" + r[1] : "-";
+  document.getElementById("metaVerified").textContent = task.verified === true ? "Yes" : task.verified === false ? "No" : "-";
+  document.getElementById("metaSteps").textContent = task.data.length;
+  document.getElementById("metaQuery").textContent = task.query;
+  renderSteps();
+  updateStepNav();
+}
+
+function renderSteps() {
+  const container = document.getElementById("stepContainer");
+  container.innerHTML = "";
+  const task = state.currentTask;
+  task.data.forEach((step, i) => {
+    const card = document.createElement("div");
+    card.className = "step-card" + (i === state.currentStepIndex ? " active" : "");
+    card.id = "step-" + i;
+    if (!state.showAllSteps && i !== state.currentStepIndex) card.classList.add("hidden");
+    const plan = step.plan || {};
+    const args = plan.arguments || {};
+    const actionType = args.action || "unknown";
+    let chips = "";
+    if (step.last_step_correct === true) chips += '<span class="chip chip-correct">Correct</span>';
+    if (step.last_step_correct === false) chips += '<span class="chip chip-incorrect">Incorrect</span>';
+    if (step.last_step_redundant === true) chips += '<span class="chip chip-redundant">Redundant</span>';
+    const imgUrl = BASE + "/api/images/" + state.currentDirName + "/" + step.screenshot;
+    const coordHtml = buildCoordMarker(args, task.screen_resolution, step);
+    const isMobile = (task.device === "mobile");
+    const wrapperClass = "screenshot-wrapper" + (isMobile ? " mobile" : "");
+    let rightPanel = "";
+    if (isMobile) {
+      rightPanel = '<div class="step-fields"><div class="field-group"><span class="field-label">Thought</span><div class="field-value thought">' + esc(step.thought || "") + '</div></div><div class="field-group"><span class="field-label">Action</span><div class="field-value action">' + esc(step.action || "") + '</div></div><div class="field-group"><span class="field-label">Plan</span><div class="field-value code">' + esc(JSON.stringify(args, null, 2)) + '</div></div><div class="field-group"><span class="field-label">Raw Code</span><div class="field-value code">' + esc(step.code || "") + '</div></div></div>';
+    } else {
+      rightPanel = '<div class="step-fields"><div class="field-group"><span class="field-label">Thought</span><div class="field-value thought">' + esc(step.thought || "") + '</div></div><div class="field-group"><span class="field-label">Action</span><div class="field-value action">' + esc(step.action || "") + '</div></div><div class="field-group"><span class="field-label">Observation</span><div class="field-value observation">' + esc(step.observation || "") + '</div></div><div class="field-group"><span class="field-label">Reflection</span><div class="field-value reflection">' + esc(step.reflection || "") + '</div></div></div>';
+    }
+    let leftBottom = "";
+    if (!isMobile) {
+      leftBottom = '<div style="margin-top:8px"><div class="field-group"><span class="field-label">Plan</span><div class="field-value code">' + esc(JSON.stringify(args, null, 2)) + '</div></div><div class="field-group" style="margin-top:8px"><span class="field-label">Raw Code</span><div class="field-value code">' + esc(step.code || "") + '</div></div></div>';
+    }
+    card.innerHTML = '<div class="step-card-header"><span class="step-badge">Step ' + step.step + '</span><span class="step-action-type">' + esc(actionType) + '</span>' + chips + '</div><div class="step-body"><div><div class="' + wrapperClass + '"><img src="' + imgUrl + '" alt="step ' + step.step + '">' + coordHtml + '</div>' + leftBottom + '</div>' + rightPanel + '</div>';
+    container.appendChild(card);
+  });
+}
+
+function buildCoordMarker(args, screenRes, step) {
+  let html = "";
+  if (document.getElementById("showCoord").checked) {
+    const coord = args.coordinate, startCoord = args.start_coordinate;
+    const COORD_MAX = 999;
+    if (coord) {
+      const px = (coord[0] / COORD_MAX * 100).toFixed(2), py = (coord[1] / COORD_MAX * 100).toFixed(2);
+      html += '<div class="click-marker" style="left:' + px + '%;top:' + py + '%"></div><div class="coord-label" style="left:' + px + '%;top:' + py + '%">[' + coord[0] + ', ' + coord[1] + ']</div>';
+    }
+    if (startCoord) {
+      const spx = (startCoord[0] / COORD_MAX * 100).toFixed(2), spy = (startCoord[1] / COORD_MAX * 100).toFixed(2);
+      html += '<div class="click-marker" style="left:' + spx + '%;top:' + spy + '%;border-color:#3b82f6;background:rgba(59,130,246,.3)"></div><div class="coord-label" style="left:' + spx + '%;top:' + spy + '%">start [' + startCoord[0] + ', ' + startCoord[1] + ']</div>';
+    }
+  }
+  if (document.getElementById("showBbox").checked) {
+    const BBOX_MAX = 999;
+    const bboxes = [];
+    if (step.bbox) bboxes.push({box: step.bbox, label: "bbox"});
+    if (step.bbox2) bboxes.push({box: step.bbox2, label: "bbox2"});
+    bboxes.forEach(function(item) {
+      const b = item.box;
+      if (b && b.length === 2) {
+        const x1 = (b[0][0] / BBOX_MAX * 100).toFixed(2);
+        const y1 = (b[0][1] / BBOX_MAX * 100).toFixed(2);
+        const x2 = (b[1][0] / BBOX_MAX * 100).toFixed(2);
+        const y2 = (b[1][1] / BBOX_MAX * 100).toFixed(2);
+        const w = (x2 - x1).toFixed(2), h = (y2 - y1).toFixed(2);
+        const color = item.label === "bbox2" ? "#f59e0b" : "#22c55e";
+        const bg = item.label === "bbox2" ? "rgba(245,158,11,.15)" : "rgba(34,197,94,.15)";
+        html += '<div class="bbox-overlay" style="left:' + x1 + '%;top:' + y1 + '%;width:' + w + '%;height:' + h + '%;border-color:' + color + ';background:' + bg + '"><span class="bbox-label" style="background:' + color + '">' + item.label + '</span></div>';
+      }
+    });
+  }
+  return html;
+}
+
+function toggleCoords() { renderSteps(); }
+function toggleBbox() { renderSteps(); }
+function toggleAllSteps() { state.showAllSteps = document.getElementById("showAllSteps").checked; renderSteps(); }
+
+function navigateStep(delta) {
+  const total = state.currentTask.data.length;
+  state.currentStepIndex = Math.max(0, Math.min(total - 1, state.currentStepIndex + delta));
+  if (state.showAllSteps) {
+    document.querySelectorAll(".step-card").forEach((c, i) => c.classList.toggle("active", i === state.currentStepIndex));
+    document.getElementById("step-" + state.currentStepIndex).scrollIntoView({ behavior: "smooth", block: "center" });
+  } else { renderSteps(); }
+  updateStepNav();
+}
+
+function updateStepNav() {
+  const total = state.currentTask.data.length;
+  document.getElementById("stepIndicator").textContent = "Step " + (state.currentStepIndex + 1) + " / " + total;
+  document.getElementById("btnPrev").disabled = state.currentStepIndex === 0;
+  document.getElementById("btnNext").disabled = state.currentStepIndex === total - 1;
+}
+
+document.addEventListener("DOMContentLoaded", bootstrap);
+document.addEventListener("keydown", e => {
+  if (!state.currentTask) return;
+  if (e.key === "Escape") { closeLightbox(); return; }
+  if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+  if (e.key === "ArrowLeft" || e.key === "a") navigateStep(-1);
+  if (e.key === "ArrowRight" || e.key === "d") navigateStep(1);
+});
+
+function openLightbox(wrapper) {
+  const lb = document.getElementById("lightbox");
+  const container = document.getElementById("lightboxContent");
+  const clone = wrapper.cloneNode(true);
+  clone.style.maxWidth = "";
+  container.innerHTML = "";
+  container.appendChild(clone);
+  lb.classList.add("active");
+}
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("active");
+}
+document.addEventListener("click", e => {
+  const wrapper = e.target.closest(".screenshot-wrapper");
+  if (wrapper && !e.target.closest(".lightbox")) { openLightbox(wrapper); return; }
+  if (e.target.closest(".lightbox")) closeLightbox();
+});
+</script>
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div id="lightboxContent"></div>
+</div>
+</body>
+</html>

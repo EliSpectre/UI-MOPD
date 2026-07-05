@@ -1,0 +1,95 @@
+{
+    "0": {
+        "tools": null,
+        "traj": [
+            {
+                "task_goal": "Reply to Daniel's most recent email to tell him: 'I'll be there at 10:00 AM on Thursday.'",
+                "step": 1,
+                "prediction": "Action: Tap the Mail app icon to open the email application.\n<tool_call>\n{\"name\": \"mobile_use\", \"arguments\": {\"action\": \"click\", \"coordinate\": [148, 530]}}\n</tool_call>",
+                "action": {
+                    "action_type": "click",
+                    "x": 160,
+                    "y": 1273
+                },
+                "ask_user_response": null,
+                "tool_call": null
+            },
+            {
+                "task_goal": "Reply to Daniel's most recent email to tell him: 'I'll be there at 10:00 AM on Thursday.'",
+                "step": 2,
+                "prediction": "Action: Tap on the email from Daniel titled \"Meeting Thursday\".\n<tool_call>\n{\"name\": \"mobile_use\", \"arguments\": {\"action\": \"click\", \"coordinate\": [500, 415]}}\n</tool_call>",
+                "action": {
+                    "action_type": "click",
+                    "x": 541,
+                    "y": 997
+                },
+                "ask_user_response": null,
+                "tool_call": null
+            },
+            {
+                "task_goal": "Reply to Daniel's most recent email to tell him: 'I'll be there at 10:00 AM on Thursday.'",
+                "step": 3,
+                "prediction": "Action: Tap the reply arrow icon next to Daniel's name to start composing a reply.\n<tool_call>\n{\"name\": \"mobile_use\", \"arguments\": {\"action\": \"click\", \"coordinate\": [818, 218]}}\n</tool_call>",
+                "action": {
+                    "action_type": "click",
+                    "x": 884,
+                    "y": 524
+                },
+                "ask_user_response": null,
+                "tool_call": null
+            },
+            {
+                "task_goal": "Reply to Daniel's most recent email to tell him: 'I'll be there at 10:00 AM on Thursday.'",
+                "step": 4,
+                "prediction": "Action: Click the \"Compose email\" area to start typing the message.\n<tool_call>\n{\"name\": \"mobile_use\", \"arguments\": {\"action\": \"click\", \"coordinate\": [500, 333]}}\n</tool_call>",
+                "action": {
+                    "action_type": "click",
+                    "x": 541,
+                    "y": 800
+                },
+                "ask_user_response": null,
+                "tool_call": null
+            },
+            {
+                "task_goal": "Reply to Daniel's most recent email to tell him: 'I'll be there at 10:00 AM on Thursday.'",
+                "step": 5,
+                "prediction": "Action: Type the message 'I'll be there at 10:00 AM on Thursday.' into the email body.\n<tool_call>\n{\"name\": \"mobile_use\", \"arguments\": {\"action\": \"type\", \"text\": \"I'll be there at 10:00 AM on Thursday.\"}}\n</tool_call>",
+                "action": {
+                    "action_type": "input_text",
+                    "text": "I'll be there at 10:00 AM on Thursday."
+                },
+                "ask_user_response": null,
+                "tool_call": null
+            },
+            {
+                "task_goal": "Reply to Daniel's most recent email to tell him: 'I'll be there at 10:00 AM on Thursday.'",
+                "step": 6,
+                "prediction": "Action: Tap the send icon to send the email.\n<tool_call>\n{\"name\": \"mobile_use\", \"arguments\": {\"action\": \"click\", \"coordinate\": [822, 86]}}\n</tool_call>",
+                "action": {
+                    "action_type": "click",
+                    "x": 889,
+                    "y": 207
+                },
+                "ask_user_response": null,
+                "tool_call": null
+            },
+            {
+                "task_goal": "Reply to Daniel's most recent email to tell him: 'I'll be there at 10:00 AM on Thursday.'",
+                "step": 7,
+                "prediction": "Thought: The email reply has been successfully sent, fulfilling the task requirements.\nAction: Terminate the task as the email has been sent.\n<tool_call>\n{\"name\": \"mobile_use\", \"arguments\": {\"action\": \"terminate\", \"status\": \"success\"}}\n</tool_call>",
+                "action": {
+                    "action_type": "finished",
+                    "text": "success"
+                },
+                "ask_user_response": null,
+                "tool_call": null
+            }
+        ],
+        "token_usage": {
+            "completion_tokens": 1157,
+            "prompt_tokens": 24689,
+            "cached_tokens": 0,
+            "total_tokens": 25846
+        }
+    }
+}
