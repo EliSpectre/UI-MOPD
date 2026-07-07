@@ -9,7 +9,7 @@
   <br>
   <sub>Tsinghua University &nbsp;•&nbsp; Xiaomi &nbsp;•&nbsp; HIT (Shenzhen) &nbsp;•&nbsp; Zhejiang University &nbsp;•&nbsp; Peng Cheng Laboratory</sub>
   <br><br>
-  <a href="https://github.com/EliSpectre/UI-MOPD/blob/main/UI_MOPD.pdf"><img src="https://img.shields.io/badge/Paper-pdf-d32f2f?style=flat-square" alt="Paper"></a>&nbsp;
+  <a href="https://arxiv.org/pdf/2607.04425"><img src="https://img.shields.io/badge/Paper-pdf-d32f2f?style=flat-square" alt="Paper"></a>&nbsp;
   <a href="https://huggingface.co/UI-MOPD"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Huggingface-Collection-FF6700?style=flat-square" alt="Huggingface"></a>&nbsp;
   <a href="https://elispectre.github.io/UI-MOPD/"><img src="https://img.shields.io/badge/Homepage-Project%20Page-1976d2?style=flat-square" alt="Homepage"></a>
 </div>
@@ -401,10 +401,14 @@ UI-MOPD/
 ## Citation
 
 ```bibtex
-@article{lian2025uimopd,
-  title={UI-MOPD: Multi-platform On-Policy Distillation for Continual GUI Agent Learning},
-  author={Lian, Niu and Chen, Alan and Yu, Zhehao and Duan, Chengzhen and Liu, Fazhan and Liu, Hui and Fu, Pei and Luan, Jian and Wang, Yaowei and Xia, Shu-Tao and Wang, Jinpeng},
-  year={2025}
+@misc{lian2026uimopdmultiplatformonpolicydistillation,
+      title={UI-MOPD: Multi-Platform On-Policy Distillation for Continual GUI Agent Learning}, 
+      author={Niu Lian and Alan Chen and Zhehao Yu and Chengzhen Duan and Fazhan Liu and Hui Liu and Pei Fu and Jian Luan and Yaowei Wang and Shu-Tao Xia and Jinpeng Wang},
+      year={2026},
+      eprint={2607.04425},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2607.04425}, 
 }
 ```
 

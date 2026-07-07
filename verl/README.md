@@ -221,10 +221,14 @@ Key dependencies:
 If you find this training code useful, please cite:
 
 ```bibtex
-@article{ui_mopd,
-  title={UI-MOPD: Multi-teacher On-Policy Distillation for Cross-Platform GUI Agents},
-  author={...},
-  year={2025}
+@misc{lian2026uimopdmultiplatformonpolicydistillation,
+      title={UI-MOPD: Multi-Platform On-Policy Distillation for Continual GUI Agent Learning}, 
+      author={Niu Lian and Alan Chen and Zhehao Yu and Chengzhen Duan and Fazhan Liu and Hui Liu and Pei Fu and Jian Luan and Yaowei Wang and Shu-Tao Xia and Jinpeng Wang},
+      year={2026},
+      eprint={2607.04425},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2607.04425}, 
 }
 ```
 
