@@ -401,14 +401,11 @@ UI-MOPD/
 ## Citation
 
 ```bibtex
-@misc{lian2026uimopdmultiplatformonpolicydistillation,
-      title={UI-MOPD: Multi-Platform On-Policy Distillation for Continual GUI Agent Learning}, 
-      author={Niu Lian and Alan Chen and Zhehao Yu and Chengzhen Duan and Fazhan Liu and Hui Liu and Pei Fu and Jian Luan and Yaowei Wang and Shu-Tao Xia and Jinpeng Wang},
-      year={2026},
-      eprint={2607.04425},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2607.04425}, 
+@article{lian2026ui,
+  title={UI-MOPD: Multi-Platform On-Policy Distillation for Continual GUI Agent Learning},
+  author={Lian, Niu and Chen, Alan and Yu, Zhehao and Duan, Chengzhen and Liu, Fazhan and Liu, Hui and Fu, Pei and Luan, Jian and Wang, Yaowei and Xia, Shu-Tao and others},
+  journal={arXiv preprint arXiv:2607.04425},
+  year={2026}
 }
 ```
 
